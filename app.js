@@ -41,6 +41,10 @@ app.get("/compose", (req, res) => {
   res.render("compose");
 });
 
+app.get("/post", (req, res) => {
+  res.render("post");
+});
+
 
 
 app.post("/compose", (req, res) => {
@@ -52,25 +56,29 @@ app.post("/compose", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/posts/:topic", (req, res) => {
-
-  const requestedTitle = _.lowerCase(req.params.topic);
-
-  posts.forEach(function(post) {
-    const storedTitle = _.lowerCase(post.title);
-
-    if (storedTitle === requestedTitle) {
-     res.render ("/post", {
-       postTitle: post.title,
-       postContent: post.content
-     });
-   };
- });
+app.get("/posts/:postTitle", function(req,res){
+  const requestedPost = _.lowerCase(req.params.postTitle);
 
 
+  posts.forEach(function(post){
+    const storedTitle = post.title;
+    console.log(storedTitle);
+    // console.log(storedTitle);
+    if(_.lowerCase(storedTitle)===requestedPost){
+      res.render("post" ,{header : storedTitle,
+      content : post.content})
+      ;
+    }else{
+      console.log("sry");
+    }
+    // if(titles.includes(req.params.postTitle) == true){
+    //   console.log("Watch Found");
+    // }
+  }
+    )
 
 
-});
+})
 
 
 
